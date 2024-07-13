@@ -1,0 +1,112 @@
+<!--
+<html>
+<head>
+    <title>Video streaming with Node.js</title>
+</head>
+<body>
+    <h1>This is header</h1>
+
+    <video id="videoPlaye" width="50%" controls>
+            <source src="/video", type="video/mp4">
+    </video>
+</body>
+</html>
+-->
+
+<!----
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video streaming with Node.js</title>
+</head>
+<body>
+    <h1>Video Streaming</h1>
+
+    <ul>
+        <li><a href="#" onclick="playVideo('video1')">Play Video 1</a></li>
+        <li><a href="#" onclick="playVideo('video2')">Play Video 2</a></li>
+        <li><a href="#" onclick="playVideo('video3')">Play Video 3</a></li>
+    </ul>
+
+    <video id="videoPlayer" width="50%" controls>
+        <source id="videoSource" src="/video?name=video1" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        function playVideo(videoName) {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+            videoSource.src = `/video?name=${videoName}`;
+            videoPlayer.load();
+            videoPlayer.play();
+        }
+    </script>
+</body>
+</html>
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video streaming with Node.js</title>
+</head>
+<body>
+    <h1>Video Streaming</h1>
+
+    <ul>
+        <li><a href="#" onclick="playVideo('Negaraku')">Play Negaraku</a></li>
+        <li><a href="#" onclick="playVideo('DuliYangMahaMulia')">Play DuliYangMahaMulia</a></li>
+        <li><a href="#" onclick="playVideo('VarsitiKita')">Play VarsitiKita</a></li>
+    </ul>
+
+    <video id="videoPlayer" width="50%" controls>
+        <source id="videoSource" src="https://newtesting1.s3.ap-southeast-1.amazonaws.com/Negaraku.mp4" type="video/mp4">
+        <source id="videoSource" src="https://newtesting1.s3.ap-southeast-1.amazonaws.com/DuliYangMahaMulia.mp4" type="video/mp4">
+        <source id="videoSource" src="https://newtesting1.s3.ap-southeast-1.amazonaws.com/VarsitiKita.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Placeholder for QoS parameters -->
+    <div id="qosParameters">
+        <h2>Quality of Service Parameters</h2>
+        <ul>
+            <li><strong>Latency:</strong> <span id="latencyValue">Calculating...</span> ms</li>
+            <li><strong>Bitrate:</strong> <span id="bitrateValue">Calculating...</span> kbps</li>
+            <li><strong>Packet Loss:</strong> <span id="packetLossValue">Calculating...</span>%</li>
+            <li><strong>Sync Skew:</strong> <span id="syncSkewValue">Calculating...</span> ms</li>
+            <li><strong>Playback Jitter:</strong> <span id="playbackJitterValue">Calculating...</span> ms</li>
+        </ul>
+    </div>
+
+    <script>
+        // Function to update QoS parameters on the webpage
+        function updateQoS(latency, bitrate, packetLoss, syncSkew, playbackJitter) {
+            document.getElementById('latencyValue').textContent = latency;
+            document.getElementById('bitrateValue').textContent = bitrate;
+            document.getElementById('packetLossValue').textContent = packetLoss;
+            document.getElementById('syncSkewValue').textContent = syncSkew; // Display syncSkew with ' ms'
+            document.getElementById('playbackJitterValue').textContent = playbackJitter; // Display playbackJitter with ' ms'
+        }
+
+        function playVideo(videoName) {
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoSource = document.getElementById('videoSource');
+            videoSource.src = `/video?name=${videoName}`;
+            videoPlayer.load();
+            videoPlayer.play();
+
+            // Simulate updating QoS every 5 seconds (for demo purposes)
+            setInterval(() => {
+                const latency = Math.floor(Math.random() * 900) + 100;
+                const bitrate = Math.floor(Math.random() * 4500) + 500;
+                const packetLoss = (Math.random() * 10).toFixed(2);
+                const syncSkew = Math.floor(Math.random() * 200) - 100;
+                const playbackJitter = Math.floor(Math.random() * 50);
+                updateQoS(latency, bitrate, packetLoss, syncSkew, playbackJitter); // Pass all QoS parameters
+            }, 2000); // Update every 5 seconds
+        }
+    </script>
+</body>
+</html>
