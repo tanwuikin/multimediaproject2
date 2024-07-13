@@ -91,6 +91,7 @@ app.listen(2999, function() {
 const express = require('express');
 const app = express();
 const fs = require('fs');
+const path = require('path');
 
 // Function to simulate QoS parameters
 function calculateQoS() {
@@ -102,6 +103,8 @@ function calculateQoS() {
 
     return { latency, bitrate, packetLoss, syncSkew, playbackJitter };
 }
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + "/index.html");
@@ -120,7 +123,7 @@ app.get('/video', function(req, res) {
         return;
     }
 
-    const videoPath = `./${videoName}.mp4`;
+    const videoPath = path.join(__dirname, 'public', `${videoName}.mp4`);
     if (!fs.existsSync(videoPath)) {
         res.status(404).send("Video not found");
         return;
@@ -159,6 +162,7 @@ app.get('/video', function(req, res) {
 app.listen(2999, function() {
     console.log("Server is running on port:", 2999);
 });
+
 
 
 /*
